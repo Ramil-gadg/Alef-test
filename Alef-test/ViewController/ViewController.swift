@@ -71,13 +71,22 @@ class ViewController: UIViewController, UITextFieldDelegate {
     
     
     @objc func deleteAllInfoTapped  () {
-        nameView.textField.text = ""
-        ageView.textField.text = ""
-        childs = []
-        tableView.isHidden = true
-        deleteAllInfo.isHidden = true
-        addChildButton.isHidden = false
-        tableView.reloadData()
+        
+        let actionSheet = UIAlertController(title: "Очистить все данные?", message: nil, preferredStyle: .actionSheet)
+        let deleteAllInfoButton = UIAlertAction(title: "Сбросить данные", style: .default) { [weak self] _ in
+            self?.nameView.textField.text = ""
+            self?.ageView.textField.text = ""
+            self?.childs = []
+            self?.tableView.isHidden = true
+            self?.deleteAllInfo.isHidden = true
+            self?.addChildButton.isHidden = false
+            self?.tableView.reloadData()
+        }
+        let cancelButton = UIAlertAction(title: "Отмена", style: .cancel)
+        
+        actionSheet.addAction(deleteAllInfoButton)
+        actionSheet.addAction(cancelButton)
+        present(actionSheet, animated: true, completion: nil)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
